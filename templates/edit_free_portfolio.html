@@ -1,0 +1,35 @@
+{% extends "base.html" %}
+{% block title %}Edit Free Portfolio{% endblock %}
+{% block content %}
+<h1 class="text-3xl font-bold text-primary mb-6">Edit Free Portfolio</h1>
+<div class="bg-white p-8 rounded-xl shadow-lg border border-gray-200">
+    <form method="POST" action="{{ url_for('edit_portfolio', plan='Free') }}">
+        <input type="hidden" name="portfolio_type" value="Free">
+        <div class="mb-6">
+            <h2 class="text-xl font-bold text-primary mb-2">Header</h2>
+            <input type="text" name="name" placeholder="Your Name" value="{{ (sections_data.header | default({})).name | default('') }}" class="w-full px-4 py-2 border rounded-md focus:outline-none focus:ring-2 focus:ring-primary mb-2">
+            <input type="text" name="title" placeholder="Your Title (e.g., Software Engineer)" value="{{ (sections_data.header | default({})).title | default('') }}" class="w-full px-4 py-2 border rounded-md focus:outline-none focus:ring-2 focus:ring-primary">
+        </div>
+        <div class="mb-6">
+            <h2 class="text-xl font-bold text-primary mb-2">About Me</h2>
+            <textarea name="bio" rows="4" placeholder="Write a short biography about yourself..." class="w-full px-4 py-2 border rounded-md focus:outline-none focus:ring-2 focus:ring-primary">{{ (sections_data.about | default({})).bio | default('') }}</textarea>
+        </div>
+        <div class="mb-6">
+            <h2 class="text-xl font-bold text-primary mb-2">Projects</h2>
+            <input type="text" name="project_name_1" placeholder="Project Title" value="{{ (sections_data.projects[0] | default({})).name | default('') if sections_data.projects|length > 0 else '' }}" class="w-full px-4 py-2 border rounded-md focus:outline-none focus:ring-2 focus:ring-primary mb-2">
+            <textarea name="project_desc_1" rows="2" placeholder="Project description..." class="w-full px-4 py-2 border rounded-md focus:outline-none focus:ring-2 focus:ring-primary mb-2">{{ (sections_data.projects[0] | default({})).desc | default('') if sections_data.projects|length > 0 else '' }}</textarea>
+            <input type="text" name="project_img_1" placeholder="Project Image URL (Cloudinary)" value="{{ (sections_data.projects[0] | default({})).image | default('') if sections_data.projects|length > 0 else '' }}" class="w-full px-4 py-2 border rounded-md focus:outline-none focus:ring-2 focus:ring-primary">
+        </div>
+        <div class="mb-6">
+            <h2 class="text-xl font-bold text-primary mb-2">Skills</h2>
+            <input type="text" name="skills" placeholder="Skill1, Skill2, Skill3 (comma-separated)" value="{{ ', '.join(sections_data.skills | default([])) }}" class="w-full px-4 py-2 border rounded-md focus:outline-none focus:ring-2 focus:ring-primary">
+        </div>
+        <div class="mb-6">
+            <h2 class="text-xl font-bold text-primary mb-2">Contact Info</h2>
+            <input type="email" name="contact_email" placeholder="Your Email" value="{{ (sections_data.contact | default({})).email | default('') }}" class="w-full px-4 py-2 border rounded-md focus:outline-none focus:ring-2 focus:ring-primary mb-2">
+            <input type="tel" name="contact_phone" placeholder="Your Phone Number" value="{{ (sections_data.contact | default({})).phone | default('') }}" class="w-full px-4 py-2 border rounded-md focus:outline-none focus:ring-2 focus:ring-primary">
+        </div>
+        <button type="submit" class="w-full px-4 py-2 bg-primary text-white font-semibold rounded-full hover:bg-blue-800 transition duration-300">Save Portfolio</button>
+    </form>
+</div>
+{% endblock %}

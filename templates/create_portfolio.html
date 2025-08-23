@@ -1,0 +1,66 @@
+{% extends "base.html" %}
+{% block title %}Create Portfolio{% endblock %}
+{% block content %}
+<div class="max-w-3xl mx-auto bg-white p-8 rounded-xl shadow-lg border border-gray-200 mt-10">
+    <h1 class="text-3xl font-bold text-center text-primary mb-6">Create Your Portfolio</h1>
+    <p class="text-center text-gray-600 mb-8">Choose a plan and fill in your details to get started. You can always upgrade later.</p>
+
+    <form method="POST" action="{{ url_for('edit_portfolio') }}">
+        <div class="mb-8">
+            <h2 class="text-xl font-bold text-dark mb-4">Choose a Plan</h2>
+            <div class="grid md:grid-cols-3 gap-4">
+                <div class="p-4 rounded-lg border-2 border-primary cursor-pointer hover:bg-gray-50 transition duration-200">
+                    <label class="flex items-center space-x-2">
+                        <input type="radio" name="portfolio_type" value="Free" class="form-radio text-primary" checked>
+                        <span class="font-semibold text-lg text-dark">Free Plan</span>
+                    </label>
+                    <p class="text-sm text-gray-500 mt-2">A simple, one-page portfolio.</p>
+                </div>
+                <div class="p-4 rounded-lg border-2 border-gray-200 cursor-pointer hover:bg-gray-50 transition duration-200">
+                    <label class="flex items-center space-x-2">
+                        <input type="radio" name="portfolio_type" value="Paid" class="form-radio text-primary">
+                        <span class="font-semibold text-lg text-dark">Paid Plan</span>
+                    </label>
+                    <p class="text-sm text-gray-500 mt-2">Multi-page professional website.</p>
+                </div>
+                <div class="p-4 rounded-lg border-2 border-gray-200 cursor-pointer hover:bg-gray-50 transition duration-200">
+                    <label class="flex items-center space-x-2">
+                        <input type="radio" name="portfolio_type" value="Premium" class="form-radio text-primary">
+                        <span class="font-semibold text-lg text-dark">Premium Plan</span>
+                    </label>
+                    <p class="text-sm text-gray-500 mt-2">Full professional site with a blog.</p>
+                </div>
+            </div>
+        </div>
+
+        <div class="space-y-6">
+            <div>
+                <h2 class="text-xl font-bold text-dark mb-2">Header</h2>
+                <input type="text" name="name" placeholder="Your Name" class="w-full px-4 py-2 border rounded-md focus:outline-none focus:ring-2 focus:ring-primary mb-2">
+                <input type="text" name="title" placeholder="Your Professional Title" class="w-full px-4 py-2 border rounded-md focus:outline-none focus:ring-2 focus:ring-primary">
+            </div>
+            <div>
+                <h2 class="text-xl font-bold text-dark mb-2">About Me</h2>
+                <textarea name="bio" rows="4" placeholder="Write a short biography about yourself..." class="w-full px-4 py-2 border rounded-md focus:outline-none focus:ring-2 focus:ring-primary"></textarea>
+            </div>
+            <div>
+                <h2 class="text-xl font-bold text-dark mb-2">Projects (Example)</h2>
+                <input type="text" name="project_name_1" placeholder="Project Title 1" class="w-full px-4 py-2 border rounded-md focus:outline-none focus:ring-2 focus:ring-primary mb-2">
+                <input type="text" name="project_desc_1" placeholder="Project Description 1" class="w-full px-4 py-2 border rounded-md focus:outline-none focus:ring-2 focus:ring-primary mb-2">
+                <input type="text" name="project_img_1" placeholder="Image URL for Project 1" class="w-full px-4 py-2 border rounded-md focus:outline-none focus:ring-2 focus:ring-primary">
+            </div>
+            <div>
+                <h2 class="text-xl font-bold text-dark mb-2">Skills</h2>
+                <input type="text" name="skills" placeholder="Skill1, Skill2, Skill3 (comma-separated)" class="w-full px-4 py-2 border rounded-md focus:outline-none focus:ring-2 focus:ring-primary">
+            </div>
+            <div>
+                <h2 class="text-xl font-bold text-dark mb-2">Contact Info</h2>
+                <input type="email" name="contact_email" placeholder="Your Email" class="w-full px-4 py-2 border rounded-md focus:outline-none focus:ring-2 focus:ring-primary mb-2">
+                <input type="tel" name="contact_phone" placeholder="Your Phone Number" class="w-full px-4 py-2 border rounded-md focus:outline-none focus:ring-2 focus:ring-primary">
+            </div>
+        </div>
+
+        <button type="submit" class="w-full mt-8 px-6 py-3 bg-primary text-white font-semibold rounded-full hover:bg-blue-800 transition duration-300">Create My Portfolio</button>
+    </form>
+</div>
+{% endblock %}

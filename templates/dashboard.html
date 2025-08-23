@@ -1,0 +1,35 @@
+{% extends "base.html" %}
+{% block title %}Dashboard{% endblock %}
+{% block content %}
+<div class="bg-white p-8 rounded-xl shadow-lg border border-gray-200 max-w-2xl mx-auto">
+    <div class="flex items-center space-x-6 mb-8">
+        <img src="{{ current_user.profile_photo }}" alt="Profile Photo" class="w-24 h-24 rounded-full border-4 border-primary">
+        <div>
+            <h1 class="text-3xl font-bold text-dark">{{ current_user.username }}</h1>
+            <p class="text-gray-600 mt-1">{{ current_user.bio }}</p>
+            <p class="text-sm text-gray-500 mt-1">Plan: <span class="font-semibold">{{ current_user.subscription_type }}</span></p>
+        </div>
+    </div>
+    
+    <div class="space-y-4">
+        <a href="{{ url_for('public_portfolio', username=current_user.username) }}" class="block px-6 py-4 bg-primary text-white font-semibold rounded-lg shadow-md hover:bg-blue-800 transition duration-300 text-center">
+            View My Public Portfolio
+        </a>
+        <a href="{{ url_for('edit_portfolio', plan=current_user.portfolio.portfolio_type) if current_user.portfolio else url_for('select_plan') }}" class="block px-6 py-4 bg-accent text-white font-semibold rounded-lg shadow-md hover:bg-orange-600 transition duration-300 text-center">
+            Edit My Portfolio
+        </a>
+        <a href="{{ url_for('create_post') }}" class="block px-6 py-4 bg-gray-200 text-dark font-semibold rounded-lg shadow-md hover:bg-gray-300 transition duration-300 text-center">
+            Create a New Post
+        </a>
+        <a href="{{ url_for('user_profile', username=current_user.username) }}" class="block px-6 py-4 bg-gray-200 text-dark font-semibold rounded-lg shadow-md hover:bg-gray-300 transition duration-300 text-center">
+            My Profile Page
+        </a>
+        
+        <div class="border-t pt-4 mt-4">
+             <a href="{{ url_for('plan_details') }}" class="block px-6 py-4 bg-blue-500 text-white font-semibold rounded-lg shadow-md hover:bg-blue-600 transition duration-300 text-center">
+                Change/Upgrade My Plan
+            </a>
+        </div>
+    </div>
+</div>
+{% endblock %}

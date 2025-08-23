@@ -1,0 +1,70 @@
+{% extends "base.html" %}
+{% block title %}{{ user.username }}'s Professional Site{% endblock %}
+{% block content %}
+<main class="bg-gray-50 min-h-screen">
+    <nav class="bg-white p-4 rounded-xl shadow-md mb-8 flex flex-wrap justify-center space-x-4 space-y-2 md:space-y-0 font-semibold sticky top-4 mx-auto max-w-4xl z-10">
+        <a href="#home" class="text-accent hover:underline">Home</a>
+        <a href="#about" class="text-gray-600 hover:underline">About</a>
+        <a href="#projects" class="text-gray-600 hover:underline">Projects</a>
+        <a href="#testimonials" class="text-gray-600 hover:underline">Testimonials</a>
+        <a href="#contact" class="text-gray-600 hover:underline">Contact</a>
+        <a href="{{ (sections_data.premium_pages | default({})).resume_link | default('#') }}" class="text-gray-600 hover:underline">Resume</a>
+    </nav>
+
+    <div class="max-w-4xl mx-auto space-y-12">
+        <section id="home" class="bg-white p-12 rounded-xl shadow-lg text-center">
+            <h1 class="text-5xl font-extrabold text-accent mb-4">{{ (sections_data.header | default({})).name | default(user.username) }}</h1>
+            <p class="text-2xl text-primary">{{ (sections_data.header | default({})).title | default('Quick4lio User') }}</p>
+            <p class="mt-6 text-gray-600">{{ (sections_data.paid_pages | default({})).home_content | default('Welcome to my professional website.') }}</p>
+        </section>
+
+        <section id="about" class="bg-white p-8 rounded-xl shadow-lg">
+            <h2 class="text-3xl font-bold text-primary mb-4">About Me</h2>
+            <p class="text-gray-700 leading-relaxed">{{ (sections_data.about | default({})).bio | default('This is the About page content.') }}</p>
+        </section>
+
+        <section id="projects" class="bg-white p-8 rounded-xl shadow-lg">
+            <h2 class="text-3xl font-bold text-primary mb-6">My Projects</h2>
+            <div class="grid md:grid-cols-2 gap-8">
+                {% set projects = sections_data.projects | default([]) %}
+                {% for project in projects %}
+                {% if project.name %}
+                <div class="bg-gray-100 border border-gray-200 rounded-xl shadow-md overflow-hidden">
+                    <img src="{{ project.image | default('https://via.placeholder.com/600x400') }}" alt="Project Image" class="w-full h-56 object-cover">
+                    <div class="p-6 text-left">
+                        <h3 class="font-bold text-xl text-dark mb-2">{{ project.name }}</h3>
+                        <p class="text-gray-600">{{ project.desc }}</p>
+                    </div>
+                </div>
+                {% endif %}
+                {% endfor %}
+            </div>
+        </section>
+
+        <section id="testimonials" class="bg-white p-8 rounded-xl shadow-lg">
+            <h2 class="text-3xl font-bold text-primary mb-4">Client Testimonials</h2>
+            <p class="text-gray-700 italic leading-relaxed">{{ (sections_data.premium_pages | default({})).testimonials | default('No testimonials provided yet.') }}</p>
+        </section>
+
+        <section class="bg-white p-8 rounded-xl shadow-lg">
+            <h2 class="text-3xl font-bold text-primary mb-4">Case Studies & Awards</h2>
+            <div class="grid md:grid-cols-2 gap-8">
+                <div>
+                    <h3 class="font-bold text-xl text-dark mb-2">Case Studies</h3>
+                    <p class="text-gray-600">{{ (sections_data.premium_pages | default({})).case_studies | default('No case studies to display.') }}</p>
+                </div>
+                <div>
+                    <h3 class="font-bold text-xl text-dark mb-2">Awards & Certifications</h3>
+                    <p class="text-gray-600">{{ (sections_data.premium_pages | default({})).awards | default('None to show.') }}</p>
+                </div>
+            </div>
+        </section>
+        
+        <section id="contact" class="bg-white p-8 rounded-xl shadow-lg">
+            <h2 class="text-3xl font-bold text-primary mb-6">Contact</h2>
+            <p class="text-gray-700">Email: <a href="mailto:{{ (sections_data.contact | default({})).email | default('#') }}" class="text-primary hover:underline">{{ (sections_data.contact | default({})).email | default('N/A') }}</a></p>
+            <p class="text-gray-700">Phone: {{ (sections_data.contact | default({})).phone | default('N/A') }}</p>
+        </section>
+    </div>
+</main>
+{% endblock %}

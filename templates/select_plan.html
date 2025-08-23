@@ -1,0 +1,27 @@
+{% extends "base.html" %}
+{% block title %}Select Your Plan{% endblock %}
+{% block content %}
+<h1 class="text-3xl font-bold text-primary mb-6 text-center">Select Your Portfolio Plan</h1>
+<div class="bg-white p-8 rounded-xl shadow-lg border border-gray-200 max-w-lg mx-auto">
+    <form method="POST" action="{{ url_for('select_plan') }}">
+        <div class="space-y-4">
+            <label class="block p-4 border rounded-md shadow-sm hover:bg-gray-100 cursor-pointer">
+                <input type="radio" name="portfolio_type" value="Free" class="form-radio text-primary" checked>
+                <span class="ml-2 font-semibold">Free Plan</span>
+                <p class="text-sm text-gray-500 mt-1">Simple one-page portfolio with essential sections.</p>
+            </label>
+            <label class="block p-4 border rounded-md shadow-sm hover:bg-gray-100 cursor-pointer">
+                <input type="radio" name="portfolio_type" value="Paid" class="form-radio text-primary">
+                <span class="ml-2 font-semibold">Paid Plan</span>
+                <p class="text-sm text-gray-500 mt-1">Simple website with multiple sections/pages.</p>
+            </label>
+            <label class="block p-4 border rounded-md shadow-sm hover:bg-gray-100 cursor-pointer">
+                <input type="radio" name="portfolio_type" value="Premium" class="form-radio text-primary">
+                <span class="ml-2 font-semibold">Premium Plan</span>
+                <p class="text-sm text-gray-500 mt-1">Full professional site with all features.</p>
+            </label>
+        </div>
+        <button type="submit" class="w-full px-4 py-2 mt-6 bg-primary text-white font-semibold rounded-full hover:bg-blue-800 transition duration-300">Continue</button>
+    </form>
+</div>
+{% endblock %}

@@ -1,0 +1,112 @@
+{% extends "base.html" %}
+{% block title %}{{ user.username }}'s Portfolio{% endblock %}
+{% block content %}
+
+{% if portfolio and portfolio.portfolio_type == 'Free' %}
+<main class="text-center">
+    <div class="bg-white p-8 rounded-xl shadow-lg max-w-4xl mx-auto">
+        <header class="mb-8">
+            <h1 class="text-4xl font-bold text-dark">{{ (sections_data.header | default({})).name | default(user.username) }}</h1>
+            <p class="text-2xl text-primary">{{ (sections_data.header | default({})).title | default('Quick4lio User') }}</p>
+        </header>
+        <section class="mb-8 p-6 bg-gray-50 rounded-lg shadow-inner">
+            <h2 class="text-2xl font-bold text-primary mb-4">About Me</h2>
+            <p class="text-gray-700">{{ (sections_data.about | default({})).bio | default('This is a placeholder bio.') }}</p>
+        </section>
+        <section class="mb-8">
+            <h2 class="text-2xl font-bold text-primary mb-4">Selected Work & Projects</h2>
+            <div class="grid md:grid-cols-2 gap-6">
+                {% set projects = sections_data.projects | default([]) %}
+                {% for project in projects %}
+                {% if project.name %}
+                <div class="bg-gray-100 p-4 rounded-lg shadow-md text-left">
+                    <img src="{{ project.image | default('https://via.placeholder.com/400x250') }}" alt="Project Image" class="w-full h-48 object-cover rounded-md mb-2">
+                    <h3 class="font-bold text-lg text-dark">{{ project.name }}</h3>
+                    <p class="text-gray-600">{{ project.desc }}</p>
+                </div>
+                {% endif %}
+                {% endfor %}
+            </div>
+        </section>
+        <section class="mb-8 p-6 bg-gray-50 rounded-lg shadow-inner">
+            <h2 class="text-2xl font-bold text-primary mb-4">Skills</h2>
+            <ul class="flex flex-wrap justify-center gap-2">
+                {% for skill in sections_data.skills | default([]) %}
+                <li class="bg-accent text-white px-4 py-1 rounded-full">{{ skill }}</li>
+                {% endfor %}
+            </ul>
+        </section>
+        <section>
+            <h2 class="text-2xl font-bold text-primary mb-4">Contact Info</h2>
+            <p class="text-gray-700">Email: {{ (sections_data.contact | default({})).email | default('N/A') }}</p>
+            <p class="text-gray-700">Phone: {{ (sections_data.contact | default({})).phone | default('N/A') }}</p>
+        </section>
+    </div>
+</main>
+
+{% elif portfolio and portfolio.portfolio_type == 'Paid' %}
+<main class="max-w-4xl mx-auto">
+    <nav class="bg-white p-4 rounded-xl shadow-md mb-8 flex justify-center space-x-6 font-semibold">
+        <a href="#" class="text-primary hover:underline">Home</a>
+        <a href="#" class="text-gray-600 hover:underline">About</a>
+        <a href="#" class="text-gray-600 hover:underline">Work</a>
+        <a href="#" class="text-gray-600 hover:underline">Contact</a>
+    </nav>
+    <div class="bg-white p-8 rounded-xl shadow-lg">
+        <h1 class="text-4xl font-bold text-dark text-center mb-2">{{ (sections_data.header | default({})).name | default(user.username) }}'s Website</h1>
+        <p class="text-center text-lg text-primary mb-8">This is your multi-page website layout.</p>
+        <section class="mb-8">
+            <h2 class="text-2xl font-bold text-primary mb-4">About Me</h2>
+            <p class="text-gray-700">{{ (sections_data.about | default({})).bio | default('This is the About page content.') }}</p>
+        </section>
+        <section class="mb-8">
+            <h2 class="text-2xl font-bold text-primary mb-4">Services</h2>
+            <p class="text-gray-700">{{ (sections_data.paid_pages | default({})).paid_pages_content | default('Showcase your services here.') }}</p>
+        </section>
+    </div>
+</main>
+
+{% elif portfolio and portfolio.portfolio_type == 'Premium' %}
+<main class="max-w-4xl mx-auto">
+    <nav class="bg-white p-4 rounded-xl shadow-md mb-8 flex flex-wrap justify-center space-x-4 space-y-2 md:space-y-0 font-semibold">
+        <a href="#" class="text-accent hover:underline">Home</a>
+        <a href="#" class="text-gray-600 hover:underline">About</a>
+        <a href="#" class="text-gray-600 hover:underline">Projects</a>
+        <a href="#" class="text-gray-600 hover:underline">Contact</a>
+        <a href="#" class="text-gray-600 hover:underline">Blog</a>
+        <a href="#" class="text-gray-600 hover:underline">Resume</a>
+    </nav>
+    <div class="bg-white p-8 rounded-xl shadow-lg">
+        <h1 class="text-5xl font-bold text-accent text-center mb-2">{{ (sections_data.header | default({})).name | default(user.username) }}'s Professional Site</h1>
+        <p class="text-center text-lg text-primary mb-8">Welcome to my full-featured professional website.</p>
+        
+        <section class="mb-8 p-6 bg-gray-50 rounded-lg shadow-inner">
+            <h2 class="text-2xl font-bold text-primary mb-4">Testimonials</h2>
+            <p class="text-gray-700 italic">{{ (sections_data.premium_pages | default({})).testimonials | default('No testimonials yet.') }}</p>
+        </section>
+        
+        <section class="mb-8 p-6 bg-gray-50 rounded-lg shadow-inner">
+            <h2 class="text-2xl font-bold text-primary mb-4">Case Studies</h2>
+            <p class="text-gray-700">{{ (sections_data.premium_pages | default({})).case_studies | default('No case studies to display.') }}</p>
+        </section>
+        
+        <section class="mb-8 p-6 bg-gray-50 rounded-lg shadow-inner">
+            <h2 class="text-2xl font-bold text-primary mb-4">Awards & Certifications</h2>
+            <p class="text-gray-700">{{ (sections_data.premium_pages | default({})).awards | default('None to show.') }}</p>
+        </section>
+        
+        <div class="text-center">
+            <a href="{{ (sections_data.premium_pages | default({})).resume_link | default('#') }}" class="inline-block mt-4 px-6 py-3 bg-accent text-white font-semibold rounded-full hover:bg-orange-600 transition duration-300">View My Resume</a>
+        </div>
+    </div>
+</main>
+
+{% else %}
+<div class="text-center mt-10">
+    <p class="text-xl text-gray-600">This user has not yet created a portfolio.</p>
+    {% if current_user.is_authenticated and current_user.username == user.username %}
+    <a href="{{ url_for('edit_portfolio') }}" class="inline-block mt-4 px-6 py-3 bg-primary text-white font-semibold rounded-full hover:bg-blue-800 transition duration-300">Create Your Portfolio Now</a>
+    {% endif %}
+</div>
+{% endif %}
+{% endblock %}

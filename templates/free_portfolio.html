@@ -1,0 +1,52 @@
+{% extends "base.html" %}
+{% block title %}{{ user.username }}'s Portfolio{% endblock %}
+{% block content %}
+<main class="text-center bg-gray-50 min-h-screen py-12">
+    <div class="bg-white p-8 rounded-xl shadow-lg max-w-4xl mx-auto">
+        <header class="mb-12 border-b-2 border-primary pb-8">
+            <h1 class="text-4xl md:text-5xl font-extrabold text-dark mb-2">{{ (sections_data.header | default({})).name | default(user.username) }}</h1>
+            <p class="text-2xl text-primary">{{ (sections_data.header | default({})).title | default('Quick4lio User') }}</p>
+        </header>
+
+        <section class="mb-12 p-6 bg-gray-100 rounded-lg shadow-inner text-left">
+            <h2 class="text-2xl font-bold text-primary mb-4">About Me</h2>
+            <p class="text-gray-700 leading-relaxed">{{ (sections_data.about | default({})).bio | default('This is a placeholder bio.') }}</p>
+        </section>
+
+        <section class="mb-12">
+            <h2 class="text-3xl font-bold text-primary mb-6">Selected Work</h2>
+            <div class="grid md:grid-cols-2 gap-8">
+                {% set projects = sections_data.projects | default([]) %}
+                {% for project in projects %}
+                {% if project.name %}
+                <div class="bg-white border border-gray-200 rounded-xl shadow-md overflow-hidden">
+                    <img src="{{ project.image | default('https://via.placeholder.com/600x400') }}" alt="Project Image" class="w-full h-56 object-cover">
+                    <div class="p-6 text-left">
+                        <h3 class="font-bold text-xl text-dark mb-2">{{ project.name }}</h3>
+                        <p class="text-gray-600">{{ project.desc }}</p>
+                    </div>
+                </div>
+                {% endif %}
+                {% endfor %}
+            </div>
+        </section>
+
+        <section class="mb-12 p-6 bg-gray-100 rounded-lg shadow-inner">
+            <h2 class="text-3xl font-bold text-primary mb-6">Skills</h2>
+            <ul class="flex flex-wrap justify-center gap-4">
+                {% for skill in sections_data.skills | default([]) %}
+                <li class="bg-accent text-white px-6 py-2 rounded-full font-semibold">{{ skill }}</li>
+                {% endfor %}
+            </ul>
+        </section>
+
+        <section>
+            <h2 class="text-3xl font-bold text-primary mb-6">Get in Touch</h2>
+            <div class="flex flex-col md:flex-row justify-center items-center space-y-4 md:space-y-0 md:space-x-8">
+                <p class="text-gray-700">Email: <a href="mailto:{{ (sections_data.contact | default({})).email | default('#') }}" class="text-primary hover:underline">{{ (sections_data.contact | default({})).email | default('N/A') }}</a></p>
+                <p class="text-gray-700">Phone: {{ (sections_data.contact | default({})).phone | default('N/A') }}</p>
+            </div>
+        </section>
+    </div>
+</main>
+{% endblock %}

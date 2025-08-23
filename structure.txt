@@ -1,0 +1,21 @@
+Quick4lio/
+├── app.py                     # Main Flask application file
+├── templates/
+│   ├── base.html              # Base template with navbar, footer, and Tailwind CSS CDN
+│   ├── index.html             # Landing page for visitors
+│   ├── feed.html              # Home page displaying public posts
+│   ├── login.html             # User login form
+│   ├── register.html          # User registration form
+│   ├── dashboard.html         # User dashboard
+│   ├── user_profile.html      # User profile page
+│   ├── plan_details.html      # Page for viewing subscription plans
+│   ├── edit_free_portfolio.html   # Form for editing the free portfolio
+│   ├── edit_paid_portfolio.html   # Form for editing the paid portfolio
+│   ├── edit_premium_portfolio.html# Form for editing the premium portfolio
+│   ├── free_portfolio.html    # Public view of the free portfolio
+│   ├── paid_portfolio.html    # Public view of the paid portfolio
+│   ├── premium_portfolio.html # Public view of the premium portfolio
+│   ├── create_post.html       # Form for creating a new post
+│   ├── public_portfolio.html  # Dynamically generated public portfolio
+│   └── footer.html            # Reusable footer
+└── database.db                # SQLite database file

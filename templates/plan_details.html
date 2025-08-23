@@ -1,0 +1,68 @@
+{% extends "base.html" %}
+{% block title %}Upgrade Your Plan{% endblock %}
+{% block content %}
+<h1 class="text-3xl font-bold text-primary mb-6 text-center">Upgrade Your Plan</h1>
+<p class="text-center text-gray-600 mb-8">Compare our plans and find the perfect fit for your professional needs.</p>
+<div class="grid md:grid-cols-3 gap-6 max-w-5xl mx-auto">
+
+    <div class="bg-white p-8 rounded-xl shadow-lg border-2 {% if current_plan == 'Free' %}border-accent{% else %}border-gray-200{% endif %}">
+        <h2 class="text-2xl font-bold text-dark text-center mb-4">Free</h2>
+        <p class="text-center text-gray-700 text-lg mb-4">A simple portfolio to get you started.</p>
+        <p class="text-center text-4xl font-extrabold text-primary mb-6">$0<span class="text-lg text-gray-500">/mo</span></p>
+        <ul class="space-y-2 text-gray-700 mb-8">
+            <li class="flex items-center"><span class="text-green-500 mr-2">✔</span> One-Page Portfolio</li>
+            <li class="flex items-center"><span class="text-green-500 mr-2">✔</span> Basic Sections (Bio, Projects, Skills)</li>
+            <li class="flex items-center"><span class="text-red-500 mr-2">✖</span> Multi-Page Website</li>
+            <li class="flex items-center"><span class="text-red-500 mr-2">✖</span> Case Studies & Testimonials</li>
+            <li class="flex items-center"><span class="text-red-500 mr-2">✖</span> Custom URL</li>
+        </ul>
+        <div class="text-center">
+            {% if current_plan == 'Free' %}
+                <button class="w-full py-2 bg-gray-400 text-white font-semibold rounded-full cursor-not-allowed">Current Plan</button>
+            {% else %}
+                <a href="{{ url_for('select_plan', plan_type='Free') }}" class="w-full block py-2 bg-blue-500 text-white font-semibold rounded-full hover:bg-blue-600 transition duration-300">Downgrade</a>
+            {% endif %}
+        </div>
+    </div>
+
+    <div class="bg-white p-8 rounded-xl shadow-lg border-2 {% if current_plan == 'Paid' %}border-accent{% else %}border-gray-200{% endif %}">
+        <h2 class="text-2xl font-bold text-dark text-center mb-4">Paid</h2>
+        <p class="text-center text-gray-700 text-lg mb-4">For professionals who need a full website.</p>
+        <p class="text-center text-4xl font-extrabold text-primary mb-6">$9<span class="text-lg text-gray-500">/mo</span></p>
+        <ul class="space-y-2 text-gray-700 mb-8">
+            <li class="flex items-center"><span class="text-green-500 mr-2">✔</span> All Free features</li>
+            <li class="flex items-center"><span class="text-green-500 mr-2">✔</span> Multi-Page Website</li>
+            <li class="flex items-center"><span class="text-green-500 mr-2">✔</span> Advanced Customization</li>
+            <li class="flex items-center"><span class="text-red-500 mr-2">✖</span> Case Studies & Testimonials</li>
+            <li class="flex items-center"><span class="text-red-500 mr-2">✖</span> Custom URL</li>
+        </ul>
+        <div class="text-center">
+            {% if current_plan == 'Paid' %}
+                <button class="w-full py-2 bg-gray-400 text-white font-semibold rounded-full cursor-not-allowed">Current Plan</button>
+            {% else %}
+                <a href="{{ url_for('select_plan', plan_type='Paid') }}" class="w-full block py-2 bg-blue-500 text-white font-semibold rounded-full hover:bg-blue-600 transition duration-300">Upgrade</a>
+            {% endif %}
+        </div>
+    </div>
+
+    <div class="bg-white p-8 rounded-xl shadow-lg border-2 {% if current_plan == 'Premium' %}border-accent{% else %}border-gray-200{% endif %}">
+        <h2 class="text-2xl font-bold text-dark text-center mb-4">Premium</h2>
+        <p class="text-center text-gray-700 text-lg mb-4">The ultimate professional online presence.</p>
+        <p class="text-center text-4xl font-extrabold text-primary mb-6">$19<span class="text-lg text-gray-500">/mo</span></p>
+        <ul class="space-y-2 text-gray-700 mb-8">
+            <li class="flex items-center"><span class="text-green-500 mr-2">✔</span> All Paid features</li>
+            <li class="flex items-center"><span class="text-green-500 mr-2">✔</span> Case Studies & Testimonials</li>
+            <li class="flex items-center"><span class="text-green-500 mr-2">✔</span> Resume/CV Hosting</li>
+            <li class="flex items-center"><span class="text-green-500 mr-2">✔</span> Blog & Posts</li>
+            <li class="flex items-center"><span class="text-green-500 mr-2">✔</span> Custom URL</li>
+        </ul>
+        <div class="text-center">
+            {% if current_plan == 'Premium' %}
+                <button class="w-full py-2 bg-gray-400 text-white font-semibold rounded-full cursor-not-allowed">Current Plan</button>
+            {% else %}
+                <a href="{{ url_for('select_plan', plan_type='Premium') }}" class="w-full block py-2 bg-blue-500 text-white font-semibold rounded-full hover:bg-blue-600 transition duration-300">Upgrade</a>
+            {% endif %}
+        </div>
+    </div>
+</div>
+{% endblock %}
