@@ -2,6 +2,7 @@
 {% block title %}Home{% endblock %}
 {% block content %}
 <main class="text-center">
+    <!-- Hero Section: The main banner to capture attention -->
     <section class="py-20 bg-primary text-white rounded-lg shadow-xl">
         <div class="container mx-auto px-6">
             <h1 class="text-5xl font-bold mb-4">Quick4lio</h1>
@@ -13,9 +14,38 @@
         </div>
     </section>
 
+    <!-- Features Section: Highlight key benefits and features -->
+    <section class="py-20 bg-gray-50">
+        <h2 class="text-3xl font-bold text-primary mb-12">Why Choose Quick4lio?</h2>
+        <div class="container mx-auto px-6 grid md:grid-cols-3 gap-12">
+            <div class="space-y-4 p-6 rounded-lg shadow-md bg-white">
+                <div class="flex justify-center text-accent mb-4">
+                    <svg class="h-12 w-12" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 6.253v13m0-13C10.832 5.485 9.176 5 7.5 5S4.168 5.485 3 6.253v13C4.168 18.515 5.824 18 7.5 18s3.332.485 4.5 1.253m0-13C13.168 5.485 14.824 5 16.5 5S19.832 5.485 21 6.253v13C19.832 18.515 18.176 18 16.5 18s-3.332-.485-4.5-1.253"/></svg>
+                </div>
+                <h3 class="font-bold text-lg text-primary">Easy to Use</h3>
+                <p class="text-gray-600">Our intuitive drag-and-drop builder makes creating your portfolio a simple, enjoyable process. No technical skills needed.</p>
+            </div>
+            <div class="space-y-4 p-6 rounded-lg shadow-md bg-white">
+                <div class="flex justify-center text-accent mb-4">
+                    <svg class="h-12 w-12" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M3 6l3 2v13c0 1.1.9 2 2 2h12c1.1 0 2-.9 2-2V8l-3-2H3zm12 5h2m-2-4h2m-2-4h2m-2-4h2M9 13a4 4 0 100-8 4 4 0 000 8z"/></svg>
+                </div>
+                <h3 class="font-bold text-lg text-primary">Stunning Templates</h3>
+                <p class="text-gray-600">Choose from a variety of modern and professional templates designed to make your work shine on any device.</p>
+            </div>
+            <div class="space-y-4 p-6 rounded-lg shadow-md bg-white">
+                <div class="flex justify-center text-accent mb-4">
+                    <svg class="h-12 w-12" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13 10V3L4 14h7v7l9-11h-7z"/></svg>
+                </div>
+                <h3 class="font-bold text-lg text-primary">Get Discovered</h3>
+                <p class="text-gray-600">All portfolios are optimized for search engines, helping potential clients and employers find your work easily.</p>
+            </div>
+        </div>
+    </section>
+
+    <!-- Pricing Section: The plan details with clear distinctions -->
     <section class="py-20">
         <h2 class="text-3xl font-bold text-primary mb-12">Choose Your Plan</h2>
-        <div class="grid md:grid-cols-3 gap-8">
+        <div class="grid md:grid-cols-3 gap-8 px-6">
             <div class="bg-white p-8 rounded-xl shadow-lg border border-gray-200 hover:shadow-2xl transition duration-300">
                 <h3 class="text-2xl font-bold text-dark mb-4">Free Plan</h3>
                 <p class="text-gray-600 mb-4">Simple one-page portfolio with essential sections.</p>
@@ -51,6 +81,7 @@
         </div>
     </section>
     
+    <!-- Testimonials Section: Build trust with user quotes -->
     <section class="py-20 bg-gray-50 rounded-lg shadow-inner">
         <h2 class="text-3xl font-bold text-primary mb-12">What Our Users Say</h2>
         <div class="grid md:grid-cols-3 gap-8 px-6">
@@ -66,6 +97,15 @@
                 <p class="italic text-gray-700 mb-4">"I upgraded to the Premium plan for my consulting business, and the blog feature is exactly what I needed."</p>
                 <div class="text-right font-semibold text-dark">- Emily Wanga</div>
             </div>
+        </div>
+    </section>
+
+    <!-- Call to Action Section: A final push to encourage sign-ups -->
+    <section class="py-20">
+        <div class="container mx-auto px-6 bg-primary text-white p-10 rounded-lg shadow-xl">
+            <h2 class="text-4xl font-bold mb-4">Ready to Build Your Portfolio?</h2>
+            <p class="text-lg mb-8">Join thousands of professionals who are showcasing their work with Quick4lio. It’s free to start!</p>
+            <a href="{{ url_for('register') }}" class="px-8 py-4 bg-accent text-white font-bold rounded-full hover:bg-orange-600 transition duration-300 transform hover:scale-105 inline-block">Start Your Portfolio Now</a>
         </div>
     </section>
 </main>
