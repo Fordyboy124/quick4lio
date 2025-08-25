@@ -1,7 +1,32 @@
+# Virtual environments
 venv/
+ENV/
+env/
+.venv/
+
+# Python cache / compiled files
 __pycache__/
-instance/
 *.pyc
 *.pyo
 *.pyd
+*$py.class
+
+# Environment variables
 .env
+.env.*
+
+# Instance / local settings
+instance/
+.DS_Store
+
+# Distribution / packaging
+build/
+dist/
+*.egg-info/
+.eggs/
+pip-wheel-metadata/
+
+# IDE / editor settings
+.vscode/
+.idea/
+*.swp
