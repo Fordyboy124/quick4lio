@@ -29,7 +29,7 @@ class User(UserMixin, db.Model):
     email = db.Column(db.String(120), unique=True, nullable=False)
     password_hash = db.Column(db.String(128))
     subscription_type = db.Column(db.String(20), default='Free')
-    profile_photo = db.Column(db.String(200), default='https://via.placeholder.com/150')
+    profile_photo = db.Column(db.String(200), default='https://thumbs.dreamstime.com/b/default-avatar-profile-icon-vector-social-media-user-image-182145777.jpg')
     bio = db.Column(db.Text, default='A new user on Quick4lio.')
     social_links = db.Column(db.Text, default='{}') # Stored as JSON string
     
