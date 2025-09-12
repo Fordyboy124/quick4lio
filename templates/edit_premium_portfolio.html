@@ -1,46 +1,292 @@
 {% extends "base.html" %}
 {% block title %}Edit Premium Portfolio{% endblock %}
 {% block content %}
-<h1 class="text-3xl font-bold text-primary mb-6">Edit Premium Portfolio</h1>
-<div class="bg-white p-8 rounded-xl shadow-lg border border-gray-200">
-    <form method="POST" action="{{ url_for('edit_portfolio', plan='Premium') }}">
-        <input type="hidden" name="portfolio_type" value="Premium">
-        <div class="mb-6">
-            <h2 class="text-xl font-bold text-primary mb-2">Header</h2>
-            <input type="text" name="name" placeholder="Your Name" value="{{ (sections_data.header | default({})).name | default('') }}" class="w-full px-4 py-2 border rounded-md focus:outline-none focus:ring-2 focus:ring-primary mb-2">
-            <input type="text" name="title" placeholder="Your Title" value="{{ (sections_data.header | default({})).title | default('') }}" class="w-full px-4 py-2 border rounded-md focus:outline-none focus:ring-2 focus:ring-primary">
+<div class="min-h-screen bg-gradient-to-br from-blue-50 to-indigo-100 py-8">
+    <div class="max-w-4xl mx-auto px-4">
+        <div class="text-center mb-8">
+            <h1 class="text-4xl font-bold text-gray-800 mb-2">Premium Portfolio Editor</h1>
+            <p class="text-gray-600">Create a professional website that showcases your expertise</p>
         </div>
-        <div class="mb-6">
-            <h2 class="text-xl font-bold text-primary mb-2">About Me</h2>
-            <textarea name="bio" rows="4" placeholder="Your biography..." class="w-full px-4 py-2 border rounded-md focus:outline-none focus:ring-2 focus:ring-primary">{{ (sections_data.about | default({})).bio | default('') }}</textarea>
-        </div>
-        <div class="mb-6">
-            <h2 class="text-xl font-bold text-primary mb-2">Projects</h2>
-            <input type="text" name="project_name_1" placeholder="Project Title" value="{{ (sections_data.projects[0] | default({})).name | default('') if sections_data.projects|length > 0 else '' }}" class="w-full px-4 py-2 border rounded-md focus:outline-none focus:ring-2 focus:ring-primary mb-2">
-            <textarea name="project_desc_1" rows="2" placeholder="Project description..." class="w-full px-4 py-2 border rounded-md focus:outline-none focus:ring-2 focus:ring-primary mb-2">{{ (sections_data.projects[0] | default({})).desc | default('') if sections_data.projects|length > 0 else '' }}</textarea>
-            <input type="text" name="project_img_1" placeholder="Project Image URL" value="{{ (sections_data.projects[0] | default({})).image | default('') if sections_data.projects|length > 0 else '' }}" class="w-full px-4 py-2 border rounded-md focus:outline-none focus:ring-2 focus:ring-primary">
-        </div>
-        <div class="mb-6">
-            <h2 class="text-xl font-bold text-primary mb-2">Skills</h2>
-            <input type="text" name="skills" placeholder="Skill1, Skill2, Skill3 (comma-separated)" value="{{ ', '.join(sections_data.skills | default([])) }}" class="w-full px-4 py-2 border rounded-md focus:outline-none focus:ring-2 focus:ring-primary">
-        </div>
-        <div class="mb-6">
-            <h2 class="text-xl font-bold text-primary mb-2">Contact Info</h2>
-            <input type="email" name="contact_email" placeholder="Your Email" value="{{ (sections_data.contact | default({})).email | default('') }}" class="w-full px-4 py-2 border rounded-md focus:outline-none focus:ring-2 focus:ring-primary mb-2">
-            <input type="tel" name="contact_phone" placeholder="Your Phone Number" value="{{ (sections_data.contact | default({})).phone | default('') }}" class="w-full px-4 py-2 border rounded-md focus:outline-none focus:ring-2 focus:ring-primary">
-        </div>
-        <div class="mb-6">
-            <h2 class="text-xl font-bold text-primary mb-2">Home Page Content</h2>
-            <textarea name="home_content" rows="4" placeholder="Content for your Home page..." class="w-full px-4 py-2 border rounded-md focus:outline-none focus:ring-2 focus:ring-primary">{{ (sections_data.paid_pages | default({})).home_content | default('') }}</textarea>
-        </div>
-        <div class="mb-6">
-            <h2 class="text-xl font-bold text-primary mb-2">Premium Plan Additions</h2>
-            <textarea name="case_studies" rows="3" placeholder="Case studies content..." class="w-full px-4 py-2 border rounded-md focus:outline-none focus:ring-2 focus:ring-primary mb-2">{{ (sections_data.premium_pages | default({})).case_studies | default('') }}</textarea>
-            <textarea name="testimonials" rows="3" placeholder="Testimonials from clients..." class="w-full px-4 py-2 border rounded-md focus:outline-none focus:ring-2 focus:ring-primary mb-2">{{ (sections_data.premium_pages | default({})).testimonials | default('') }}</textarea>
-            <input type="url" name="resume_link" placeholder="Link to your Resume/CV" value="{{ (sections_data.premium_pages | default({})).resume_link | default('') }}" class="w-full px-4 py-2 border rounded-md focus:outline-none focus:ring-2 focus:ring-primary mb-2">
-            <input type="text" name="awards" placeholder="Awards & Certifications" value="{{ (sections_data.premium_pages | default({})).awards | default('') }}" class="w-full px-4 py-2 border rounded-md focus:outline-none focus:ring-2 focus:ring-primary">
-        </div>
-        <button type="submit" class="w-full px-4 py-2 bg-primary text-white font-semibold rounded-full hover:bg-blue-800 transition duration-300">Save Portfolio</button>
-    </form>
+
+        <form method="POST" action="{{ url_for('edit_portfolio') }}" class="space-y-8">
+            <input type="hidden" name="portfolio_type" value="Premium">
+            
+            <!-- Header Section -->
+            <div class="bg-white p-8 rounded-2xl shadow-lg border border-gray-100">
+                <div class="flex items-center mb-6">
+                    <div class="w-12 h-12 bg-blue-100 rounded-full flex items-center justify-center mr-4">
+                        <svg class="w-6 h-6 text-blue-600" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M16 7a4 4 0 11-8 0 4 4 0 018 0zM12 14a7 7 0 00-7 7h14a7 7 0 00-7-7z"></path>
+                        </svg>
+                    </div>
+                    <h2 class="text-2xl font-bold text-gray-800">Personal Information</h2>
+                </div>
+                <div class="grid md:grid-cols-2 gap-6">
+                    <div>
+                        <label class="block text-sm font-semibold text-gray-700 mb-2">Full Name *</label>
+                        <input type="text" name="name" placeholder="John Doe" 
+                               value="{{ (sections_data.header | default({})).name | default('') }}" 
+                               class="w-full px-4 py-3 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent transition duration-200">
+                    </div>
+                    <div>
+                        <label class="block text-sm font-semibold text-gray-700 mb-2">Professional Title *</label>
+                        <input type="text" name="title" placeholder="Senior Software Engineer" 
+                               value="{{ (sections_data.header | default({})).title | default('') }}" 
+                               class="w-full px-4 py-3 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent transition duration-200">
+                    </div>
+                </div>
+                <div class="mt-6">
+                    <label class="block text-sm font-semibold text-gray-700 mb-2">Professional Tagline</label>
+                    <input type="text" name="tagline" placeholder="Crafting innovative solutions with cutting-edge technology" 
+                           value="{{ (sections_data.header | default({})).tagline | default('') }}" 
+                           class="w-full px-4 py-3 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent transition duration-200">
+                </div>
+            </div>
+
+            <!-- About Section -->
+            <div class="bg-white p-8 rounded-2xl shadow-lg border border-gray-100">
+                <div class="flex items-center mb-6">
+                    <div class="w-12 h-12 bg-green-100 rounded-full flex items-center justify-center mr-4">
+                        <svg class="w-6 h-6 text-green-600" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 12h6m-6 4h6m2 5H7a2 2 0 01-2-2V5a2 2 0 012-2h5.586a1 1 0 01.707.293l5.414 5.414a1 1 0 01.293.707V19a2 2 0 01-2 2z"></path>
+                        </svg>
+                    </div>
+                    <h2 class="text-2xl font-bold text-gray-800">About & Experience</h2>
+                </div>
+                <div class="space-y-6">
+                    <div>
+                        <label class="block text-sm font-semibold text-gray-700 mb-2">Professional Summary</label>
+                        <textarea name="bio" rows="5" 
+                                  placeholder="Describe your professional background, expertise, and what makes you unique..."
+                                  class="w-full px-4 py-3 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent transition duration-200 resize-none">{{ (sections_data.about | default({})).bio | default('') }}</textarea>
+                    </div>
+                    <div class="grid md:grid-cols-2 gap-6">
+                        <div>
+                            <label class="block text-sm font-semibold text-gray-700 mb-2">Years of Experience</label>
+                            <input type="number" name="experience_years" placeholder="5" 
+                                   value="{{ (sections_data.about | default({})).experience_years | default('') }}" 
+                                   class="w-full px-4 py-3 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent transition duration-200">
+                        </div>
+                        <div>
+                            <label class="block text-sm font-semibold text-gray-700 mb-2">Location</label>
+                            <input type="text" name="location" placeholder="San Francisco, CA" 
+                                   value="{{ (sections_data.about | default({})).location | default('') }}" 
+                                   class="w-full px-4 py-3 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent transition duration-200">
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Projects Section -->
+            <div class="bg-white p-8 rounded-2xl shadow-lg border border-gray-100">
+                <div class="flex items-center mb-6">
+                    <div class="w-12 h-12 bg-purple-100 rounded-full flex items-center justify-center mr-4">
+                        <svg class="w-6 h-6 text-purple-600" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 11H5m14 0a2 2 0 012 2v6a2 2 0 01-2 2H5a2 2 0 01-2-2v-6a2 2 0 012-2m14 0V9a2 2 0 00-2-2M5 11V9a2 2 0 012-2m0 0V5a2 2 0 012-2h6a2 2 0 012 2v2M7 7h10"></path>
+                        </svg>
+                    </div>
+                    <h2 class="text-2xl font-bold text-gray-800">Featured Projects</h2>
+                </div>
+                <div class="space-y-8">
+                    {% for i in range(3) %}
+                    <div class="border border-gray-200 rounded-xl p-6 bg-gray-50">
+                        <h3 class="text-lg font-semibold text-gray-800 mb-4">Project {{ i + 1 }}</h3>
+                        <div class="grid md:grid-cols-2 gap-4">
+                            <div>
+                                <label class="block text-sm font-semibold text-gray-700 mb-2">Project Name</label>
+                                <input type="text" name="project_name_{{ i + 1 }}" placeholder="E-commerce Platform" 
+                                       value="{{ (sections_data.projects[i] | default({})).name | default('') if sections_data.projects|length > i else '' }}" 
+                                       class="w-full px-3 py-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent transition duration-200">
+                            </div>
+                            <div>
+                                <label class="block text-sm font-semibold text-gray-700 mb-2">Technologies Used</label>
+                                <input type="text" name="project_tech_{{ i + 1 }}" placeholder="React, Node.js, MongoDB" 
+                                       value="{{ (sections_data.projects[i] | default({})).technologies | default('') if sections_data.projects|length > i else '' }}" 
+                                       class="w-full px-3 py-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent transition duration-200">
+                            </div>
+                        </div>
+                        <div class="mt-4 grid md:grid-cols-2 gap-4">
+                            <div>
+                                <label class="block text-sm font-semibold text-gray-700 mb-2">Project URL</label>
+                                <input type="url" name="project_url_{{ i + 1 }}" placeholder="https://project-demo.com" 
+                                       value="{{ (sections_data.projects[i] | default({})).url | default('') if sections_data.projects|length > i else '' }}" 
+                                       class="w-full px-3 py-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent transition duration-200">
+                            </div>
+                            <div>
+                                <label class="block text-sm font-semibold text-gray-700 mb-2">GitHub Repository</label>
+                                <input type="url" name="project_github_{{ i + 1 }}" placeholder="https://github.com/user/repo" 
+                                       value="{{ (sections_data.projects[i] | default({})).github | default('') if sections_data.projects|length > i else '' }}" 
+                                       class="w-full px-3 py-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent transition duration-200">
+                            </div>
+                        </div>
+                        <div class="mt-4">
+                            <label class="block text-sm font-semibold text-gray-700 mb-2">Project Description</label>
+                            <textarea name="project_desc_{{ i + 1 }}" rows="3" 
+                                      placeholder="Describe the project, your role, and the impact it had..."
+                                      class="w-full px-3 py-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent transition duration-200 resize-none">{{ (sections_data.projects[i] | default({})).desc | default('') if sections_data.projects|length > i else '' }}</textarea>
+                        </div>
+                        <div class="mt-4">
+                            <label class="block text-sm font-semibold text-gray-700 mb-2">Project Image URL</label>
+                            <input type="url" name="project_img_{{ i + 1 }}" placeholder="https://example.com/project-image.jpg" 
+                                   value="{{ (sections_data.projects[i] | default({})).image | default('') if sections_data.projects|length > i else '' }}" 
+                                   class="w-full px-3 py-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent transition duration-200">
+                        </div>
+                    </div>
+                    {% endfor %}
+                </div>
+            </div>
+
+            <!-- Skills & Expertise -->
+            <div class="bg-white p-8 rounded-2xl shadow-lg border border-gray-100">
+                <div class="flex items-center mb-6">
+                    <div class="w-12 h-12 bg-yellow-100 rounded-full flex items-center justify-center mr-4">
+                        <svg class="w-6 h-6 text-yellow-600" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9.663 17h4.673M12 3v1m6.364 1.636l-.707.707M21 12h-1M4 12H3m3.343-5.657l-.707-.707m2.828 9.9a5 5 0 117.072 0l-.548.547A3.374 3.374 0 0014 18.469V19a2 2 0 11-4 0v-.531c0-.895-.356-1.754-.988-2.386l-.548-.547z"></path>
+                        </svg>
+                    </div>
+                    <h2 class="text-2xl font-bold text-gray-800">Skills & Expertise</h2>
+                </div>
+                <div class="grid md:grid-cols-2 gap-6">
+                    <div>
+                        <label class="block text-sm font-semibold text-gray-700 mb-2">Technical Skills</label>
+                        <textarea name="technical_skills" rows="4" 
+                                  placeholder="JavaScript, Python, React, Node.js, AWS, Docker..."
+                                  class="w-full px-4 py-3 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent transition duration-200 resize-none">{{ (sections_data.skills | default({})).technical | default('') }}</textarea>
+                    </div>
+                    <div>
+                        <label class="block text-sm font-semibold text-gray-700 mb-2">Soft Skills</label>
+                        <textarea name="soft_skills" rows="4" 
+                                  placeholder="Leadership, Problem Solving, Team Collaboration..."
+                                  class="w-full px-4 py-3 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent transition duration-200 resize-none">{{ (sections_data.skills | default({})).soft | default('') }}</textarea>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Contact Information -->
+            <div class="bg-white p-8 rounded-2xl shadow-lg border border-gray-100">
+                <div class="flex items-center mb-6">
+                    <div class="w-12 h-12 bg-red-100 rounded-full flex items-center justify-center mr-4">
+                        <svg class="w-6 h-6 text-red-600" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M3 8l7.89 4.26a2 2 0 002.22 0L21 8M5 19h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v10a2 2 0 002 2z"></path>
+                        </svg>
+                    </div>
+                    <h2 class="text-2xl font-bold text-gray-800">Contact Information</h2>
+                </div>
+                <div class="grid md:grid-cols-2 gap-6">
+                    <div>
+                        <label class="block text-sm font-semibold text-gray-700 mb-2">Email Address *</label>
+                        <input type="email" name="contact_email" placeholder="john@example.com" 
+                               value="{{ (sections_data.contact | default({})).email | default('') }}" 
+                               class="w-full px-4 py-3 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent transition duration-200">
+                    </div>
+                    <div>
+                        <label class="block text-sm font-semibold text-gray-700 mb-2">Phone Number</label>
+                        <input type="tel" name="contact_phone" placeholder="+1 (555) 123-4567" 
+                               value="{{ (sections_data.contact | default({})).phone | default('') }}" 
+                               class="w-full px-4 py-3 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent transition duration-200">
+                    </div>
+                </div>
+                <div class="grid md:grid-cols-3 gap-6 mt-6">
+                    <div>
+                        <label class="block text-sm font-semibold text-gray-700 mb-2">LinkedIn Profile</label>
+                        <input type="url" name="linkedin_url" placeholder="https://linkedin.com/in/johndoe" 
+                               value="{{ (sections_data.contact | default({})).linkedin | default('') }}" 
+                               class="w-full px-4 py-3 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent transition duration-200">
+                    </div>
+                    <div>
+                        <label class="block text-sm font-semibold text-gray-700 mb-2">GitHub Profile</label>
+                        <input type="url" name="github_url" placeholder="https://github.com/johndoe" 
+                               value="{{ (sections_data.contact | default({})).github | default('') }}" 
+                               class="w-full px-4 py-3 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent transition duration-200">
+                    </div>
+                    <div>
+                        <label class="block text-sm font-semibold text-gray-700 mb-2">Portfolio Website</label>
+                        <input type="url" name="website_url" placeholder="https://johndoe.com" 
+                               value="{{ (sections_data.contact | default({})).website | default('') }}" 
+                               class="w-full px-4 py-3 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent transition duration-200">
+                    </div>
+                </div>
+            </div>
+
+            <!-- Premium Features -->
+            <div class="bg-white p-8 rounded-2xl shadow-lg border border-gray-100 ring-2 ring-blue-200 bg-gradient-to-r from-blue-50 to-indigo-50">
+                <div class="flex items-center mb-6">
+                    <div class="w-12 h-12 bg-indigo-100 rounded-full flex items-center justify-center mr-4">
+                        <svg class="w-6 h-6 text-indigo-600" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 3v4M3 5h4M6 17v4m-2-2h4m5-16l2.286 6.857L21 12l-5.714 2.143L13 21l-2.286-6.857L5 12l5.714-2.143L13 3z"></path>
+                        </svg>
+                    </div>
+                    <h2 class="text-2xl font-bold text-gray-800">Premium Features</h2>
+                    <span class="ml-3 px-3 py-1 bg-indigo-600 text-white text-xs font-semibold rounded-full">PREMIUM</span>
+                </div>
+                
+                <div class="space-y-6">
+                    <div>
+                        <label class="block text-sm font-semibold text-gray-700 mb-2">Welcome Message</label>
+                        <textarea name="home_content" rows="4" 
+                                  placeholder="Write a compelling welcome message for your homepage visitors..."
+                                  class="w-full px-4 py-3 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:border-transparent transition duration-200 resize-none">{{ (sections_data.paid_pages | default({})).home_content | default('') }}</textarea>
+                    </div>
+                    
+                    <div class="grid md:grid-cols-2 gap-6">
+                        <div>
+                            <label class="block text-sm font-semibold text-gray-700 mb-2">Client Testimonials</label>
+                            <textarea name="testimonials" rows="5" 
+                                      placeholder="Share testimonials from satisfied clients or colleagues..."
+                                      class="w-full px-4 py-3 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:border-transparent transition duration-200 resize-none">{{ (sections_data.premium_pages | default({})).testimonials | default('') }}</textarea>
+                        </div>
+                        <div>
+                            <label class="block text-sm font-semibold text-gray-700 mb-2">Case Studies</label>
+                            <textarea name="case_studies" rows="5" 
+                                      placeholder="Describe detailed case studies of your most successful projects..."
+                                      class="w-full px-4 py-3 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:border-transparent transition duration-200 resize-none">{{ (sections_data.premium_pages | default({})).case_studies | default('') }}</textarea>
+                        </div>
+                    </div>
+                    
+                    <div class="grid md:grid-cols-2 gap-6">
+                        <div>
+                            <label class="block text-sm font-semibold text-gray-700 mb-2">Resume/CV Link</label>
+                            <input type="url" name="resume_link" placeholder="https://drive.google.com/file/d/your-resume" 
+                                   value="{{ (sections_data.premium_pages | default({})).resume_link | default('') }}" 
+                                   class="w-full px-4 py-3 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:border-transparent transition duration-200">
+                        </div>
+                        <div>
+                            <label class="block text-sm font-semibold text-gray-700 mb-2">Awards & Certifications</label>
+                            <input type="text" name="awards" placeholder="AWS Certified Solutions Architect, Employee of the Year 2023..." 
+                                   value="{{ (sections_data.premium_pages | default({})).awards | default('') }}" 
+                                   class="w-full px-4 py-3 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:border-transparent transition duration-200">
+                        </div>
+                    </div>
+                    
+                    <div class="grid md:grid-cols-2 gap-6">
+                        <div>
+                            <label class="block text-sm font-semibold text-gray-700 mb-2">Services Offered</label>
+                            <textarea name="services" rows="4" 
+                                      placeholder="List the services you offer to potential clients..."
+                                      class="w-full px-4 py-3 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:border-transparent transition duration-200 resize-none">{{ (sections_data.premium_pages | default({})).services | default('') }}</textarea>
+                        </div>
+                        <div>
+                            <label class="block text-sm font-semibold text-gray-700 mb-2">Hourly Rate (Optional)</label>
+                            <input type="text" name="hourly_rate" placeholder="$75-150/hour" 
+                                   value="{{ (sections_data.premium_pages | default({})).hourly_rate | default('') }}" 
+                                   class="w-full px-4 py-3 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:border-transparent transition duration-200">
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Submit Button -->
+            <div class="text-center">
+                <button type="submit" 
+                        class="inline-flex items-center px-8 py-4 bg-gradient-to-r from-blue-600 to-indigo-600 text-white font-bold text-lg rounded-full shadow-lg hover:from-blue-700 hover:to-indigo-700 focus:outline-none focus:ring-4 focus:ring-blue-300 transform hover:scale-105 transition duration-300">
+                    <svg class="w-5 h-5 mr-2" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7"></path>
+                    </svg>
+                    Save Premium Portfolio
+                </button>
+                <p class="mt-3 text-sm text-gray-600">Your changes will be saved and your professional site will be updated</p>
+            </div>
+        </form>
+    </div>
 </div>
 {% endblock %}

@@ -198,25 +198,61 @@ def edit_portfolio():
         # Now we know a portfolio object exists
         user_portfolio.portfolio_type = portfolio_type
         
+        # Build the data structure based on the new enhanced form
         data = {
-            'header': {'name': request.form.get('name'), 'title': request.form.get('title')},
-            'about': {'bio': request.form.get('bio')},
-            'projects': [
-                {'name': request.form.get('project_name_1'), 'desc': request.form.get('project_desc_1'), 'image': request.form.get('project_img_1')},
-            ],
-            'skills': request.form.get('skills').split(',') if request.form.get('skills') else [],
-            'contact': {'email': request.form.get('contact_email'), 'phone': request.form.get('contact_phone')}
+            'header': {
+                'name': request.form.get('name'),
+                'title': request.form.get('title'),
+                'tagline': request.form.get('tagline')
+            },
+            'about': {
+                'bio': request.form.get('bio'),
+                'experience_years': request.form.get('experience_years'),
+                'location': request.form.get('location')
+            },
+            'projects': [],
+            'skills': {
+                'technical': request.form.get('technical_skills'),
+                'soft': request.form.get('soft_skills')
+            },
+            'contact': {
+                'email': request.form.get('contact_email'),
+                'phone': request.form.get('contact_phone'),
+                'linkedin': request.form.get('linkedin_url'),
+                'github': request.form.get('github_url'),
+                'website': request.form.get('website_url')
+            }
         }
         
-        if portfolio_type in ['Paid', 'Premium']:
-            data['paid_pages'] = {'home_content': request.form.get('home_content')}
+        # Handle multiple projects (up to 3)
+        for i in range(1, 4):  # Projects 1, 2, 3
+            project_name = request.form.get(f'project_name_{i}')
+            if project_name:  # Only add if project has a name
+                project = {
+                    'name': project_name,
+                    'desc': request.form.get(f'project_desc_{i}'),
+                    'image': request.form.get(f'project_img_{i}'),
+                    'technologies': request.form.get(f'project_tech_{i}'),
+                    'url': request.form.get(f'project_url_{i}'),
+                    'github': request.form.get(f'project_github_{i}')
+                }
+                data['projects'].append(project)
         
+        # Handle paid features
+        if portfolio_type in ['Paid', 'Premium']:
+            data['paid_pages'] = {
+                'home_content': request.form.get('home_content')
+            }
+        
+        # Handle premium features
         if portfolio_type == 'Premium':
             data['premium_pages'] = {
                 'case_studies': request.form.get('case_studies'),
                 'testimonials': request.form.get('testimonials'),
                 'resume_link': request.form.get('resume_link'),
-                'awards': request.form.get('awards')
+                'awards': request.form.get('awards'),
+                'services': request.form.get('services'),
+                'hourly_rate': request.form.get('hourly_rate')
             }
         
         user_portfolio.sections_data = json.dumps(data)
@@ -272,4 +308,3 @@ def public_portfolio(username):
 # To run the app:
 if __name__ == '__main__':
     app.run(debug=True)
-    
